@@ -35,9 +35,16 @@ jobs:
     - name: Adicionar binários do usuário ao PATH
       run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+    - name: Aceitar licenças do Android SDK automaticamente
+      run: |
+        mkdir -p $HOME/.buildozer/android/platform/android-sdk/licenses
+        echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+        echo -e "\n24333f8a43b6806230452627e324e95dce3719c8" >> $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+        echo -e "\nd56f5187479451eabf01fb78af6dfcb131a648fa" >> $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+
     - name: Rodar Buildozer para gerar o APK
       run: |
-        buildozer -v android debug
+        yes | buildozer -v android debug
 
     - name: Salvar o APK gerado
       uses: actions/upload-artifact@v4
