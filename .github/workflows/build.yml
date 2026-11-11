@@ -18,14 +18,14 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Instalar dependências do sistema
+    - name: Instalar dependências do sistema e corrigir Autotools
       run: |
         sudo apt-get update
         sudo apt-get install -y \
             git zip unzip autoconf libtool pkg-config \
             zlib1g-dev libncurses5-dev ncurses-dev libsdl2-dev \
             libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-            openjdk-17-jdk
+            openjdk-17-jdk automake gettext
 
     - name: Instalar Buildozer e dependências Python
       run: |
@@ -45,7 +45,6 @@ jobs:
         mkdir -p latest
         mv cmdline-tools/* latest/ || true
         rm commandlinetools.zip
-        # Criar o link que o Buildozer procura para não dar erro
         mkdir -p $ANDROID_HOME/tools/bin
         ln -s $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager $ANDROID_HOME/tools/bin/sdkmanager
 
