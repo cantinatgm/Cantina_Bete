@@ -18,14 +18,14 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Instalar dependências do sistema e corrigir Autotools
+    - name: Instalar dependências do sistema e ferramentas de compilação
       run: |
         sudo apt-get update
         sudo apt-get install -y \
             git zip unzip autoconf libtool pkg-config \
             zlib1g-dev libncurses5-dev ncurses-dev libsdl2-dev \
             libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-            openjdk-17-jdk automake gettext
+            openjdk-17-jdk automake gettext libltdl-dev
 
     - name: Instalar Buildozer e dependências Python
       run: |
