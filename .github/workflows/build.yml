@@ -24,7 +24,8 @@ jobs:
         sudo apt-get install -y \
             git zip unzip autoconf libtool pkg-config \
             zlib1g-dev libncurses5-dev ncurses-dev libsdl2-dev \
-            libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+            libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            openjdk-17-jdk
 
     - name: Instalar Buildozer e dependências Python
       run: |
@@ -33,6 +34,13 @@ jobs:
 
     - name: Adicionar binários do usuário ao PATH
       run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Instalar pacotes essenciais do Android SDK (Build Tools e Platform Tools)
+      run: |
+        export ANDROID_HOME="$HOME/.buildozer/android/platform/android-sdk"
+        mkdir -p $ANDROID_HOME/cmdline-tools
+        # Aceitar licenças automaticamente e instalar ferramentas necessárias do SDK
+        yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --sdk_root=$ANDROID_HOME "build-tools;33.0.2" "platforms;android-33" "platform-tools" || true
 
     - name: Rodar Buildozer para gerar o APK
       run: |
